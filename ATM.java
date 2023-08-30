@@ -8,11 +8,12 @@ public class ATM {
         this.accounts = new HashMap<String, Double>();
     }
 
-    public void openAccount(String email, Double initialDeposit) throws IOException {
-        if (!accounts.containsKey(email)) {
-            accounts.put(email, initialDeposit);
+    public void openAccount(String userId, Double amount) throws IOException {
+        if (!accounts.containsKey(userId)) {
+            accounts.put(userId, amount);
         } else {
             throw new IOException("This email is already associated with an account.");
         }
     }
+
 }
