@@ -66,15 +66,12 @@ public class ATM {
     }
 
     public void audit() throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter(generateFileName());
-    }
-
-    public String generateFileName() {
-        String fileName = "";
-        for (int i = 0; i < 5; i++) {
-            fileName += (int) (Math.random() * 9) + 1;
-            fileName += (char) ((int) (Math.random() * 126)) + 33;
+        PrintWriter pw = new PrintWriter("AccountAudit.txt");
+        for (HashMap.Entry<String, Double> entry : accounts.entrySet()) {
+            pw.print("Email: " + entry.getKey());
+            pw.print("  Balance: " + entry.getValue());
+            pw.print("\n");
         }
-        return fileName;
+        pw.close();
     }
 }
