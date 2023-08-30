@@ -25,4 +25,12 @@ public class ATM {
             throw new IOException("Must withdraw money before closing an account.");
         }
     }
+
+    public double checkBalance(String userId) throws IOException {
+        if (accounts.containsKey(userId)) {
+            return accounts.get(userId);
+        } else {
+            throw new IOException();
+        }
+    }
 }
