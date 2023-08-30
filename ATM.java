@@ -45,4 +45,16 @@ public class ATM {
         }
         return balance;
     }
+
+    public double withdrawMoney(String userId, double amount) throws IOException {
+        double balance = 0;
+        if (accounts.get(userId) >= amount) {
+            balance = accounts.get(userId);
+            balance -= amount;
+            accounts.put(userId, balance);
+            return balance;
+        } else {
+            throw new IOException("You're Broke AF");
+        }
+    }
 }
