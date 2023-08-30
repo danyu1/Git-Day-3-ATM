@@ -6,10 +6,14 @@ import java.io.PrintWriter;
 public class ATM {
     private HashMap<String, Double> accounts;
 
+    // initializes an atm and creates a new hashmap to store key value pairs of
+    // email and balance to that email
     public ATM() {
         this.accounts = new HashMap<String, Double>();
     }
 
+    // create a new account by intiializing it to a hashmap with a given amount,
+    // throws error if userId already exists
     public void openAccount(String userId, Double amount) throws IOException {
         if (!accounts.containsKey(userId)) {
             accounts.put(userId, amount);
@@ -18,6 +22,7 @@ public class ATM {
         }
     }
 
+    // if balance of an account is 0 the key of the hashmap is deleted
     public void closeAccount(String userId) throws IOException {
         double balance = 0.0;
         balance = accounts.get(userId);
@@ -28,6 +33,7 @@ public class ATM {
         }
     }
 
+    // returns the balance of a given userId
     public double checkBalance(String userId) throws IOException {
         if (accounts.containsKey(userId)) {
             return accounts.get(userId);
@@ -36,6 +42,7 @@ public class ATM {
         }
     }
 
+    // uadds money to the given userId balance
     public double depositMoney(String userId, double amount) throws IOException {
         double balance = 0;
         if (accounts.containsKey(userId)) {
@@ -48,6 +55,7 @@ public class ATM {
         return balance;
     }
 
+    // removes money from the given userId's balance
     public double withdrawMoney(String userId, double amount) throws IOException {
         double balance = 0;
         if (accounts.get(userId) >= amount) {
@@ -60,11 +68,20 @@ public class ATM {
         }
     }
 
+    // transfers balance from an account to another account updating appropriate
+    // values
     public boolean transferMoney(String fromAccount, String toAccount, double amount) throws IOException {
-        depositMoney(toAccount, withdrawMoney(fromAccount, amount));
-        return true;
+        try {
+            withdrawMoney(fromAccount, amount);
+            depositMoney(toAccount, amount);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
+    // creates a text file called AccountAudit.txt that reveals all the accounts
+    // with their respective balances
     public void audit() throws FileNotFoundException {
         PrintWriter pw = new PrintWriter("AccountAudit.txt");
         for (HashMap.Entry<String, Double> entry : accounts.entrySet()) {
