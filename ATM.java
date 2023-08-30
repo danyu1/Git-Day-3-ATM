@@ -16,4 +16,13 @@ public class ATM {
         }
     }
 
+    public void closeAccount(String userId) throws IOException {
+        double balance = 0.0;
+        balance = accounts.get(userId);
+        if (accounts.get(userId) <= 0.0) {
+            accounts.remove(userId);
+        } else {
+            throw new IOException("Must withdraw money before closing an account.");
+        }
+    }
 }
