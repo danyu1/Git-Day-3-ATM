@@ -33,4 +33,16 @@ public class ATM {
             throw new IOException();
         }
     }
+
+    public double depositMoney(String userId, double amount) throws IOException {
+        double balance = 0;
+        if (accounts.containsKey(userId)) {
+            balance = accounts.get(userId);
+            balance += amount;
+            accounts.put(userId, balance);
+        } else {
+            throw new IOException();
+        }
+        return balance;
+    }
 }
