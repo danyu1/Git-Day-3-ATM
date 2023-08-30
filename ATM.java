@@ -1,5 +1,7 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.io.PrintWriter;
 
 public class ATM {
     private HashMap<String, Double> accounts;
@@ -56,5 +58,23 @@ public class ATM {
         } else {
             throw new IOException("You're Broke AF");
         }
+    }
+
+    public boolean transferMoney(String fromAccount, String toAccount, double amount) throws IOException {
+        depositMoney(toAccount, withdrawMoney(fromAccount, amount));
+        return true;
+    }
+
+    public void audit() throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter(generateFileName());
+    }
+
+    public String generateFileName() {
+        String fileName = "";
+        for (int i = 0; i < 5; i++) {
+            fileName += (int) (Math.random() * 9) + 1;
+            fileName += (char) ((int) (Math.random() * 126)) + 33;
+        }
+        return fileName;
     }
 }
