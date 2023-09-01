@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class ATMAuditTester {
@@ -23,5 +25,23 @@ public class ATMAuditTester {
         // withdraw money from account 2
         bank.depositMoney("test@gmail.com", 100.0);
         bank.audit();
+        verifyAuditFile("AccountAudit.txt", 3);
+    }
+
+    private static void verifyAuditFile(String fileName, int expectedEntries) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            int entryCount = 0;
+            while (reader.readLine() != null) {
+                entryCount++;
+            }
+            if (entryCount == expectedEntries) {
+                System.out.println("Audit file entries match expected count.");
+            } else {
+                System.out.println(
+                        "Audit file entries" + entryCount + "do not match expected count" + expectedEntries + ".");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
