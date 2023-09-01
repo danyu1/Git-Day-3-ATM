@@ -55,10 +55,10 @@ public class ATM {
             balance = accounts.get(userId);
             balance += amount;
             accounts.put(userId, balance);
+            return amount;
         } else {
             throw new IOException("Invalid Deposit Value. Or account does not exist.");
         }
-        return balance;
     }
 
     // removes money from the given userId's balance
@@ -71,7 +71,7 @@ public class ATM {
             balance = accounts.get(userId);
             balance -= amount;
             accounts.put(userId, balance);
-            return balance;
+            return amount;
         } else {
             throw new IOException("You're Broke AF");
         }
